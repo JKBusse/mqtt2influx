@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  bridge:
+    build: .
+    container_name: mqtt_influx_bridge
+    environment:
+      - INFLUXDB_URL=${INFLUXDB_URL:-http://localhost:8086}
+      - INFLUXDB_TOKEN=${INFLUXDB_TOKEN:-your-token}
+      - INFLUXDB_ORG=${INFLUXDB_ORG:-your-org}
+      - INFLUXDB_BUCKET=${INFLUXDB_BUCKET:-MQTT}
+      - MQTT_BROKER_HOST=${MQTT_BROKER_HOST:-localhost}
+      - MQTT_BROKER_PORT=${MQTT_BROKER_PORT:-1883}
+      - MQTT_USERNAME=${MQTT_USERNAME:-}
+      - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+      - MQTT_TOPIC_FILTER=${MQTT_TOPIC_FILTER:-/home/data/+/+/+}
+      - MQTT_TOPIC_REGEX=${MQTT_TOPIC_REGEX:-/home/data/([^/]+)/([^/]+)/([^/]+)}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    restart: unless-stopped
